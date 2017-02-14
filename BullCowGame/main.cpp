@@ -25,6 +25,7 @@ int main() {
 		PrintIntro();
 		PlayGame();		
 		bPlayAgain = AskToPlayAgain();
+		std::cout << std::endl;
 	} while (bPlayAgain);
 
 	return 0; // exit the application
@@ -32,7 +33,25 @@ int main() {
 
 // Introduce the game
 void PrintIntro() {
-	std::cout << "Welcome to Bulls and Cows, a fun word game\n";
+	std::cout << "\n\n   Welcome to Bulls and Cows, a fun word game.\n\n";
+	std::cout << "                                        /;    ;\\\n";
+	std::cout << "                                    __  \\\\____//\n";
+	std::cout << "                                   /{_\\_/   `'\\____\n";
+	std::cout << "                                   \\___   (o)  (o  }\n";
+	std::cout << "        _____________________________/          :--'\n";
+	std::cout << "    ,-,'`@@@@@@@@       @@@@@@         \\_    `__\\\n";
+	std::cout << "   ;:(  @@@@@@@@@        @@@             \\___(o'o)\n";
+	std::cout << "   :: )  @@@@          @@@@@@        ,'@@(  `===='\n";
+	std::cout << "   :: : @@@@@:          @@@@         `@@@:\n";
+	std::cout << "   :: \\  @@@@@:       @@@@@@@)    (  '@@@'\n";
+	std::cout << "   ;; /\\      /`,    @@@@@@@@@\\   :@@@@@)\n";
+	std::cout << "   ::/  )    {_----------------:  :~`,~~;\n";
+	std::cout << "  ;;'`; :   )                  :  / `; ;\n";
+	std::cout << " ;;;; : :   ;                  :  ;  ; :\n";
+	std::cout << " `'`' / :  :                   :  :  : :\n";
+	std::cout << "     )_ \\__;      \"; \"         :_ ;  \\_\\       `,','\n";
+	std::cout << "     :__\\  \\    * `,'*         \\  \\  :  \\   *  8`;'*  *\n";
+	std::cout << "         `^'     \\ :/           `^'  `-^-'   \\v/ :  \\/ \n\n";
 	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinkg of?\n";
 	std::cout << std::endl;
 	return;
@@ -51,7 +70,8 @@ void PlayGame() {
 		FBullCowCount BullCowCount = BCGame.SubmitValidGuess(Guess);
 		std::cout << "Bulls = " << BullCowCount.Bulls;
 		std::cout << " Cows = " << BullCowCount.Cows << std::endl;
-		PrintGuess(Guess);		
+		std::cout << std::endl;
+		
 	}
 
 	PrintGameSummary();
@@ -67,7 +87,7 @@ FText GetValidGuess() {
 
 	do {
 		int32 CurrentTry = BCGame.GetCurrentTry();
-		std::cout << "Try " << CurrentTry << ". Please enter your guess: ";
+		std::cout << "Try " << CurrentTry << " of " << BCGame.GetMaxTries() << ". Please enter your guess: ";
 		
 		std::getline(std::cin, Guess);
 
@@ -75,19 +95,18 @@ FText GetValidGuess() {
 
 		switch (Status) {
 		case EGuessStatus::Wrong_Length:
-			std::cout << "Please enter a " << BCGame.GetHiddenWordLength() << " letter word.\n";
+			std::cout << "Please enter a " << BCGame.GetHiddenWordLength() << " letter word.\n\n";
 			break;
 		case EGuessStatus::Not_Isogram:
-			std::cout << "Please enter a word without repeating letters. \n";
+			std::cout << "Please enter a word without repeating letters. \n\n";
 			break;
 		case EGuessStatus::Not_Lowercase:
-			std::cout << "Please enter all lowercase letters. \n";
+			std::cout << "Please enter all lowercase letters. \n\n";
 			break;
 		default:			
 			break; // Assume the guess is valid
 		}
-
-		std::cout << std::endl;
+		
 	} while (Status != EGuessStatus::OK); // Keep looping until we get a valid guess
 
 	return Guess;
@@ -101,10 +120,10 @@ void PrintGuess(FText Guess) {
 
 void PrintGameSummary() {
 	if (BCGame.IsGameWon()) {
-		std::cout << "Congrats you guessed the word!\n";
+		std::cout << "Well done, You Win!\n";
 	}
 	else {
-		std::cout << "Sorry please play again.\n";
+		std::cout << "Better luck next time!.\n";
 	}
 
 	return;
