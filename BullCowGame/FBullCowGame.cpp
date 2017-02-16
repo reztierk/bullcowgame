@@ -1,17 +1,19 @@
 #include "FBullCowGame.h"
-#include <map>
-#define TMap std::map
 
 using int32 = int;
 
-FBullCowGame::FBullCowGame() {	
+FBullCowGame::FBullCowGame() {	// Defualt Constructor
 	Reset();
 }
 
-int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bGameWon; }
+
+int32 FBullCowGame::GetMaxTries() const { 
+	TMap<int32, int32> WordLengthToMaxTries{ {3,5}, {4,6}, {5,7}, {6,8}, { 7,8 } };
+	return WordLengthToMaxTries[MyHiddenWord.length()]; 
+}
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
 	if (!IsIsogram(Guess)) { // Not Isogram
@@ -25,12 +27,22 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
 	return EGuessStatus::OK;
 }
 
+bool FBullCowGame::setDifficulty(int32 Difficulty) {
+
+	if (HiddenWords.count(Difficulty)) {
+		MyHiddenWord = HiddenWords[Difficulty];
+		return true;
+	}
+
+	return false;
+}
+
 void FBullCowGame::Reset() {
-	constexpr int32 MAX_TRIES = 3;
-	MyMaxTries = MAX_TRIES;
-	const FString HIDDEN_WORD = "planet";
-	MyHiddenWord = HIDDEN_WORD;
-	MyCurrentTry = 1;
+	Difficulty = 1;
+	HiddenWords = { {1,"car"}, {2, "bake"}, {3,"juice"}, {4,"planet"},{5,"blanket"} };
+	MyHiddenWord = HiddenWords[Difficulty];
+
+	MyCurrentTry = 1;	
 	bGameWon = false;
 
 	return;

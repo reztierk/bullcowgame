@@ -12,6 +12,7 @@ using int32 = int;
 
 void PrintIntro();
 void PlayGame();
+void ChooseDifficulty();
 FText GetValidGuess();
 void PrintGuess(FText Guess);
 void PrintGameSummary();
@@ -21,8 +22,8 @@ FBullCowGame BCGame;
 
 int main() {
 	bool bPlayAgain = false;
-	do	{
-		PrintIntro();
+	PrintIntro();
+	do	{		
 		PlayGame();		
 		bPlayAgain = AskToPlayAgain();
 		std::cout << std::endl;
@@ -51,8 +52,7 @@ void PrintIntro() {
 	std::cout << " `'`' / :  :                   :  :  : :\n";
 	std::cout << "     )_ \\__;      \"; \"         :_ ;  \\_\\       `,','\n";
 	std::cout << "     :__\\  \\    * `,'*         \\  \\  :  \\   *  8`;'*  *\n";
-	std::cout << "         `^'     \\ :/           `^'  `-^-'   \\v/ :  \\/ \n\n";
-	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinkg of?\n";
+	std::cout << "         `^'     \\ :/           `^'  `-^-'   \\v/ :  \\/ \n\n";	
 	std::cout << std::endl;
 	return;
 }
@@ -60,6 +60,8 @@ void PrintIntro() {
 // Play Game
 void PlayGame() {
 	BCGame.Reset();
+	ChooseDifficulty();
+
 	int32 MaxTries = BCGame.GetMaxTries();
 	
 	// loop asking for guesses while the game is not won and there are still guesses remaining
@@ -110,6 +112,23 @@ FText GetValidGuess() {
 	} while (Status != EGuessStatus::OK); // Keep looping until we get a valid guess
 
 	return Guess;
+}
+
+void ChooseDifficulty() {
+
+	bool Success = false;
+
+	do {
+		FString Difficulty;
+		std::cout << "What difficulty would you like to play (1-5)? ";
+		std::getline(std::cin, Difficulty);
+		Success = BCGame.setDifficulty(std::stoi(Difficulty));
+	} while (!Success);
+
+	std::cout << std::endl;
+	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n";
+
+	return;
 }
 
 // Print the guess back to the player
