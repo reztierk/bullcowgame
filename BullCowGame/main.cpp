@@ -1,15 +1,19 @@
-/* This is the console executable, that makes use of the BullCow Class
+/* 
+This is the console executable, that makes use of the BullCow Class
 This acts as the view in a MVC patter, and is responsible for all user
 interaction. For game logic see the FBullCowGame class.
 */
+#pragma once
 
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
 
+// Make syntax Unreal Friendly
 using FText = std::string;
 using int32 = int;
 
+// Function prototypes as outside a class
 void PrintIntro();
 void PlayGame();
 void ChooseDifficulty();
@@ -18,8 +22,10 @@ void PrintGuess(FText Guess);
 void PrintGameSummary();
 bool AskToPlayAgain();
 
+// Game class for reuse
 FBullCowGame BCGame;
 
+// Entry point fo the application
 int main() {
 	bool bPlayAgain = false;
 	PrintIntro();
@@ -57,7 +63,7 @@ void PrintIntro() {
 	return;
 }
 
-// Play Game
+// Play a single game till completion
 void PlayGame() {
 	BCGame.Reset();
 	ChooseDifficulty();
@@ -78,7 +84,6 @@ void PlayGame() {
 
 	PrintGameSummary();
 	
-	// TODO add a game summary
 	return;
 }
 
@@ -123,7 +128,7 @@ void ChooseDifficulty() {
 		std::cout << "What difficulty would you like to play (1-5)? ";
 		std::getline(std::cin, Difficulty);
 		Success = BCGame.setDifficulty(std::stoi(Difficulty));
-	} while (!Success);
+	} while (!Success); // Keep looping until we get a valid difficulty level
 
 	std::cout << std::endl;
 	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n";
@@ -131,7 +136,6 @@ void ChooseDifficulty() {
 	return;
 }
 
-// Print the guess back to the player
 void PrintGuess(FText Guess) {
 	std::cout << "Your guess was: " << Guess << std::endl;
 	return;
@@ -155,4 +159,3 @@ bool AskToPlayAgain() {
 
 	return (Response[0] == 'Y' || Response[0] == 'y');
 }
-

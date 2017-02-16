@@ -1,5 +1,8 @@
+#pragma once
+
 #include "FBullCowGame.h"
 
+// Make syntax Unreal Friendly
 using int32 = int;
 
 FBullCowGame::FBullCowGame() {	// Defualt Constructor
@@ -27,6 +30,7 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
 	return EGuessStatus::OK;
 }
 
+// Set Difficulty if valid
 bool FBullCowGame::setDifficulty(int32 Difficulty) {
 
 	if (HiddenWords.count(Difficulty)) {
@@ -81,7 +85,7 @@ bool FBullCowGame::IsIsogram(FString Word) const {
 
 	TMap<char, bool> LetterSeen;
 	
-	for (auto Letter : Word) { // Foreach letter of the word
+	for (auto Letter : Word) {
 		Letter = tolower(Letter);
 		if (LetterSeen[Letter]) { return false;	}
 		LetterSeen[Letter] = true;

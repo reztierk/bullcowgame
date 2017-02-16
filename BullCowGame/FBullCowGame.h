@@ -1,12 +1,18 @@
+/*
+The game logic(no view code or direct user interaction).
+This game is a simple guess the word game based on Mastermind
+*/
 #pragma once
+
+
 #include <string>
 #include <map>
-#define TMap std::map
 
+// Make syntax Unreal Friendly
+#define TMap std::map
 using FString = std::string;
 using int32 = int;
 
-// All values initialized to 0
 struct FBullCowCount {
 	int32 Bulls = 0;
 	int32 Cows = 0;
